@@ -1,0 +1,28 @@
+# This file is a simple cheatsheet on how to easily use some of the basic features/concepts of kubernetes in your workFlow
+# This assumes you have some working knowledge of how kubernetes works and that you have kubectl installed and configured.
+
+
+
+# Create a Deployment for you containerized app
+1. kubectl create deployment nginx-deployment --image=nginx:1.20.2 --port=80 --replicas=3 --dry-run=client -o yaml > nginx-deploy.yaml ==> create deploymen manifest yaml file called
+   nginx-deploy.yaml
+
+2. kubectl apply -f nginx-deploy.yaml ==> create deployment from previously created manifest file (nginx-deploy.yaml)
+
+
+
+# Create and  expose your app (endpoints) to outside connections using the nodeport service
+1. kubectl expose deployment nginx-deployment --name=web-service --type=NodePort ==> create and expose nginx-deployment to the outside world
+
+
+
+# Verify all objects have been created
+1. kubectl get deploy,rs,po,svc  ==> List all ojects i.e deployments, replicaSets, pods, services
+
+2. kubectl describe deploy,rs,po,svc ==> View detailed information about your objects
+
+OR
+
+3. <kubernetes cluster-name> dashboard  ==> view all information about your clusters on the dashboard
+
+You can either curl <Ip address> or use your browser to verify that you application is up and running.

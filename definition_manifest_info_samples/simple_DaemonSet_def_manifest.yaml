@@ -1,0 +1,41 @@
+# Simple DaemonSet manifest running a container along with some commands on how to run and manage it
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-agent
+  namespace: default
+  labels:
+    k8s-app: fluentd-agent
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluentd-agent
+  template:
+    metadata:
+      labels:
+        k8s-app: fluentd-agent
+    spec:
+      containers:
+      - name: fluentd
+        image: quay.io/fluentd_elasticsearch/fluentd:v4.5.2
+
+#DaemonSets => Specialized pod replicas that are created directly by the controller manager to run specialized functions to manage node agents ie. networking, kube proxies etc
+
+#DaemonSet Commands
+#kubectl create -f <name of daemonSet manifest file> => create a DaemonSet from an already defined manifest file like above.
+#kubectl apply -f fluentd-ds.yaml --record
+#kubectl get daemonsets
+#kubectl get ds -o wide
+#kubectl get ds fluentd-agent -o yaml
+#kubectl get ds fluentd-agent -o json
+#kubectl describe ds fluentd-agent
+#kubectl rollout status ds fluentd-agent
+#kubectl rollout history ds fluentd-agent
+#kubectl rollout history ds fluentd-agent --revision=1
+#kubectl set image ds fluentd-agent fluentd=quay.io/fluentd_elasticsearch/fluentd:v4.6.2 --record
+#kubectl rollout history ds fluentd-agent --revision=2
+#kubectl rollout undo ds fluentd-agent --to-revision=1
+#kubectl get all -l k8s-app=fluentd-agent -o wide
+#kubectl delete ds fluentd-agent
+#kubectl get ds,po -l k8s-app=fluentd-agent
